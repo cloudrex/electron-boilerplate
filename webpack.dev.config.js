@@ -3,6 +3,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const {spawn} = require("child_process");
 const {CheckerPlugin} = require("awesome-typescript-loader");
+const node = require("./node_modules/pca")
 
 // Config directories
 const SRC_DIR = path.resolve(__dirname, "src");
@@ -22,7 +23,7 @@ module.exports = {
 
 	module: {
 		rules: [
-			// Load SCSS files
+			// Load SCSS files.
 			{
 				test: /\.scss$/,
 				use: [
@@ -38,7 +39,7 @@ module.exports = {
 				]
 			},
 
-			// Load CSS files
+			// Load CSS files.
 			{
 				test: /\.css$/,
 
@@ -54,39 +55,45 @@ module.exports = {
 				include: defaultInclude
 			},
 
-			// Load typescript + typescript/react files
+			// Load TypeScript + TypeScript/React files.
 			{
 				test: /\.tsx?$/,
 				loader: "awesome-typescript-loader"
 			},
 
-			// Load javascript + javascript/react files
+			// Load JavaScript + JavaScript/React files.
 			{
 				test: /\.jsx?$/,
 				use: [{loader: "babel-loader"}],
 				include: defaultInclude
 			},
 
-			// Load images
+			// Load images.
 			{
 				test: /\.(jpe?g|png|gif)$/,
 				use: [{loader: "file-loader?name=img/[name]__[hash:base64:5].[ext]"}],
 				include: defaultInclude
 			},
 
-			// Load fonts
+			// Load fonts.
 			{
 				test: /\.(eot|svg|ttf|woff|woff2)$/,
 				use: [{loader: "file-loader?name=font/[name]__[hash:base64:5].[ext]"}],
 				include: defaultInclude
 			},
 
-			// Load sound files
+			// Load sound files.
 			{
 				test: /\.wav$|\.mp3$/,
 				exclude: /node_modules/,
 				use: [{loader: "file-loader?name=sound/[name]__[hash:base64:5].[ext]"}],
 				include: defaultInclude
+			},
+
+			// Load '.node' files.
+			{
+				test: /\.node$/,
+				loader: "node-loader"
 			}
 		]
 	},
